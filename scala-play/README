@@ -1,0 +1,45 @@
+This is your Play application
+=============================
+
+To run tests
+-------------
+
+sbt clean test
+
+To run
+-------
+
+sbt run
+
+Endpoints
+=========
+
+GET /getAllClients
+--------------------
+
+returns all clients from the database
+
+GET /getAllPets
+-----------------
+
+returns all clients from the database
+
+GET /getAllItems
+-----------------
+
+returns all items (for now, just a copy of getAllClients) from the database
+
+
+POST /registerNewPet
+----------------------
+
+example payload:
+{
+    "firstName": "fName",
+    "lastName": "lName",
+    "petName": "Floofy",
+    "petNotes": "Happy, Hairy and Healthy"
+}
+
+adds a client and a pet to the database
+
