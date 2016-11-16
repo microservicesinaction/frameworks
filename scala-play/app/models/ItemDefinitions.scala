@@ -36,7 +36,16 @@ object     Item {
       (JsPath \ "sku").read[String].map { value => Sku(value) }
     )(Item.apply _)
 
-  val itemWrites = Json.writes[Item]
+
+  val itemWrites: Writes[Item] = (
+      (JsPath \ "id").write[Int] and
+      (JsPath \ "price").write[Price] and
+      (JsPath \ "colour").write[String].contramap { (colour: Colour) => colour.value } and
+      (JsPath \ "tags").write[String].contramap { (tag: AttributeTag) => tag.value } and
+      (JsPath \ "size").write[Size] and
+      (JsPath \ "state").write[String].contramap { (state: State) => state.value } and
+      (JsPath \ "sku").write[String].contramap { (sku: Sku) => sku.value }
+    )(unlift(Item.unapply))
 
   implicit val itemFormat: Format[Item] =
     Format(itemReads, itemWrites)
