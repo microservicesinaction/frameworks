@@ -42,7 +42,19 @@ registers or updates item with requested id
 
 PUT /stock/{itemId}
 Example Request Payload:
+{
+  "quantities": {
+    "count": 12,
+    "state": "Full"
+   },
+  "sku": "102/305",
+  "stockItems": {
+    "itemId": 100,
+    "state": "Dunno"
+  }
+}
 
+adds a stock record to the database - just to test for now
 
 
 POST /items
