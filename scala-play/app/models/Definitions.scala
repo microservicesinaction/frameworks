@@ -2,6 +2,8 @@ package models
 
 import play.api.libs.json.Json
 
+//todo get rid of needing to put "value" in json
+
 case class Price(value: Int, currency: String)
 
 object Price {

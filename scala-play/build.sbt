@@ -1,4 +1,4 @@
-name := """vetsInPlay"""
+name := """playProject"""
 
 version := "1.0-SNAPSHOT"
 

@@ -3,7 +3,9 @@
 # ~~~~
 
 #todo What do you mean by start?
-GET     /items              controllers.Application.getItems(detail: Boolean, start: String, size: Int)
+GET     /items              controllers.Application.getItems(detail: Option[Boolean], start: Option[String], size: Option[Int])
 GET     /items/:id          controllers.Application.getItemById(id: Int)
 
 PUT     /items/:id          controllers.Application.updateById(id: Int)
+
+POST    /items              controllers.Application.registerItem

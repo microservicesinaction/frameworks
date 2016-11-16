@@ -10,7 +10,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 class Application @Inject()(logic: ItemLogic) extends Controller {
 
-  def getItems(detail: Boolean, start: String, size: Int) = Action.async {
+  def getItems(detail: Option[Boolean], start: Option[String], size: Option[Int]) = Action.async {
     //todo use details and start parameters. Right now only filtering on size
     logic.getItems(detail, start, size).map(r =>
       Ok(Json.toJson(r))
@@ -26,6 +26,12 @@ class Application @Inject()(logic: ItemLogic) extends Controller {
   def updateById(id: Int) = Action.async { request =>
     logic.updateItem(id, request.body.asJson.get.as[Item]).map(r => //todo .get
       Ok(r)
+    )
+  }
+
+  def registerItem = Action.async { request =>
+    logic.registerItem(request.body.asJson.get.as[Item]).map(r => // todo doesn't make sense to send ID in request
+      Ok(r)                                                       // todo .get
     )
   }
 }
