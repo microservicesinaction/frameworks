@@ -12,34 +12,39 @@ To run
 sbt run
 
 Endpoints
-=========
+==========
 
-GET /getAllClients
---------------------
+GET /items?details=true/false?start=""?size=0
+returns all items that match criteria
 
-returns all clients from the database
+GET /items/{id}
+returns item with requested id
 
-GET /getAllPets
------------------
+PUT /items/{id}
+Example Request Payload:
+|{
+|  "id": 1,
+|  "price": {
+|    "value": 12,
+|    "currency": "GBP"
+|   },
+|  "colour": {
+|    "value": "colour"
+|  },
+|  "tags": {
+|    "value": "tags"
+|  },
+|  "size": {
+|    "value": 100,
+|    "region": "EU"
+|  },
+|  "state": {
+|    "value": "state"
+|  },
+|  "sku": {
+|    "value": "sku"
+|  }
+|}
 
-returns all clients from the database
-
-GET /getAllItems
------------------
-
-returns all items (for now, just a copy of getAllClients) from the database
-
-
-POST /registerNewPet
-----------------------
-
-example payload:
-{
-    "firstName": "fName",
-    "lastName": "lName",
-    "petName": "Floofy",
-    "petNotes": "Happy, Hairy and Healthy"
-}
-
-adds a client and a pet to the database
+inserts or updates item with requested id
 

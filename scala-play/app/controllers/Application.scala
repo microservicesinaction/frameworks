@@ -1,39 +1,31 @@
 package controllers
 
 import com.google.inject.Inject
+import models.Item
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc._
-import services.database.{Client, ClientLogic}
-import services.{Pet, PetLogic}
-import services.muretail.{Item, ItemService}
+import services.database.ItemLogic
 
 import scala.concurrent.ExecutionContext.Implicits.global
 
-case class RegisterItem(firstName: String, lastName: String, petName: String, petNotes: String)
-object RegisterItem {
-  implicit val registerFormat = Json.format[RegisterItem]
-}
+class Application @Inject()(logic: ItemLogic) extends Controller {
 
-class Application @Inject()(clientsLogic: ClientLogic, petsLogic: PetLogic, itemService: ItemService) extends Controller {
-
-  def registerNewPet = Action.async { request =>
-    val registerItem = request.body.asJson.get.as[RegisterItem]
-    for {
-      petId <- petsLogic.addPet(Pet(registerItem.petName, registerItem.petNotes))
-      _ <- itemService.addItem(Item(registerItem.firstName, registerItem.lastName, petId))
-      result <- clientsLogic.addClient(Client(registerItem.firstName, registerItem.lastName, petId))
-    } yield Ok("Success")
+  def getItems(detail: Boolean, start: String, size: Int) = Action.async {
+    //todo use details and start parameters. Right now only filtering on size
+    logic.getItems(detail, start, size).map(r =>
+      Ok(Json.toJson(r))
+    )
   }
 
-  def getAllClients = Action.async {
-    clientsLogic.returnAllClients().map(client => Ok(client.mkString(", ")))
+  def getItemById(id: Int) = Action.async {
+    logic.getItem(id).map(r =>
+      Ok(Json.toJson(r))
+    )
   }
 
-  def getAllPets = Action.async {
-    petsLogic.returnAllPets().map(pet => Ok(pet.mkString(", ")))
-  }
-
-  def getAllItems = Action.async {
-    itemService.returnAllItems().map(item => Ok(item.mkString(", ")))
+  def updateById(id: Int) = Action.async { request =>
+    logic.updateItem(id, request.body.asJson.get.as[Item]).map(r => //todo .get
+      Ok(r)
+    )
   }
 }
