@@ -38,5 +38,28 @@ Example Request Payload:
   "sku": "sku"
 }
 
-inserts or updates item with requested id
+registers or updates item with requested id
 
+POST /items
+Example Request Payload:
+{
+  "id": 1,
+  "price": {
+    "value": 12,
+    "currency": "GBP"
+   },
+  "colour": "colour",
+  "tags": "tags",
+  "size": {
+    "value": 100,
+    "region": "EU"
+  },
+  "state": "state",
+  "sku": "sku"
+}
+
+registers new item (id doesn't mean anything)
+
+DELETE /items/{id}
+
+deletes item with requested id

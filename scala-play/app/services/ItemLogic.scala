@@ -72,4 +72,10 @@ class ItemLogic @Inject()(repo: ItemRepo) {
         item.sku.value)
     ).map(_ => "Success!")
   }
+
+  def deleteItem(id: Int): Future[String] = {
+    repo.db.run(
+      repo.items.filter(_.id === id).delete
+    ).map(_ => "Success!")
+  }
 }

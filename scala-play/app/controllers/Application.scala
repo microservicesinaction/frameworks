@@ -34,4 +34,10 @@ class Application @Inject()(logic: ItemLogic) extends Controller {
       Ok(r)                                                       // todo .get
     )
   }
+
+  def deleteItem(id: Int) = Action.async { request =>
+    logic.deleteItem(id).map(r =>
+      Ok(r)
+    )
+  }
 }

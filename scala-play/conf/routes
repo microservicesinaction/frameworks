@@ -9,3 +9,5 @@ GET     /items/:id          controllers.Application.getItemById(id: Int)
 PUT     /items/:id          controllers.Application.updateById(id: Int)
 
 POST    /items              controllers.Application.registerItem
+
+DELETE  /items/:id          controllers.Application.deleteItem(id: Int)
