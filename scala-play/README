@@ -22,29 +22,21 @@ returns item with requested id
 
 PUT /items/{id}
 Example Request Payload:
-|{
-|  "id": 1,
-|  "price": {
-|    "value": 12,
-|    "currency": "GBP"
-|   },
-|  "colour": {
-|    "value": "colour"
-|  },
-|  "tags": {
-|    "value": "tags"
-|  },
-|  "size": {
-|    "value": 100,
-|    "region": "EU"
-|  },
-|  "state": {
-|    "value": "state"
-|  },
-|  "sku": {
-|    "value": "sku"
-|  }
-|}
+{
+  "id": 1,
+  "price": {
+    "value": 12,
+    "currency": "GBP"
+   },
+  "colour": "colour",
+  "tags": "tags",
+  "size": {
+    "value": 100,
+    "region": "EU"
+  },
+  "state": "state",
+  "sku": "sku"
+}
 
 inserts or updates item with requested id
 
