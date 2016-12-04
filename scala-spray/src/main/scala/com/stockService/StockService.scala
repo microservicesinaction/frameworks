@@ -4,7 +4,7 @@ import akka.actor.Actor
 import spray.routing._
 import spray.http._
 import MediaTypes._
-import com.stockService.logic.ItemLogic
+import com.stockService.logic.{ItemLogic, StockLogic}
 
 import scala.util.{Failure, Success}
 
@@ -66,10 +66,12 @@ trait StockService extends HttpService {
         }
       }
     } ~
-    path("stock" / IntNumber) { id =>
+    path("stock" / IntNumber) { itemId =>
+      import StockJsonProtocol._
+
       put {
-        entity(as[Item]) { item =>
-          onComplete(stockLogic.updateItem(id, item)) {
+        entity(as[Stock]) { stock =>
+          onComplete(stockLogic.addStock(itemId, stock)) {
             case Success(value) => complete(value)
             case Failure(ex)    => complete("Uh oh")
           }

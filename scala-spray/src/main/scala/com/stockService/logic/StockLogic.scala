@@ -1,8 +1,10 @@
 package com.stockService.logic
 
-import com.stockService.db.ItemRepo
+import com.stockService.{Stock, StockRecord}
+import com.stockService.db.{ItemRepo, StockRepo}
 
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class StockLogic {
 

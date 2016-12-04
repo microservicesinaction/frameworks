@@ -26,8 +26,7 @@ class ItemLogic {
       ).map{ _.headOption match {
         case Some(result) => result.toItem
         case None => ??? //todo
-      }
-      }
+      }}
     }
 
     def updateItem(id: Int, item: Item): Future[String] = {

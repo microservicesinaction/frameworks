@@ -1,5 +1,6 @@
 package com.stockService.db
 
+import com.stockService.StockRecord
 import slick.driver.H2Driver.api._
 import slick.lifted.Tag
 
