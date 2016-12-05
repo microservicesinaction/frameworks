@@ -8,8 +8,10 @@ import services.StockLogic
 import services.database.ItemLogic
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class Application @Inject()(itemLogic: ItemLogic, stockLogic: StockLogic) extends Controller {
+  val requestErrorMessage = "See Documentation about correct request payload"
 
   def getItems(detail: Option[Boolean], start: Option[String], size: Option[Int]) = Action.async {
     //todo use details and start parameters. Right now only filtering on size
@@ -25,26 +27,34 @@ class Application @Inject()(itemLogic: ItemLogic, stockLogic: StockLogic) extend
   }
 
   def updateById(id: Int) = Action.async { request =>
-    itemLogic.updateItem(id, request.body.asJson.get.as[Item]).map(r => //todo .get
-      Ok(r)
-    )
+    request.body.asJson.fold(Future.successful(BadRequest(requestErrorMessage))) { payload =>
+      itemLogic.updateItem(id, payload.as[Item]).map(r =>
+        Ok(r)
+      )
+    }
   }
 
   def registerItem = Action.async { request =>
-    itemLogic.registerItem(request.body.asJson.get.as[Item]).map(r => // todo doesn't make sense to send ID in request
-      Ok(r)                                                       // todo .get
-    )
+    request.body.asJson.fold(Future.successful(BadRequest(requestErrorMessage))) { payload =>
+      itemLogic.registerItem(payload.as[Item]).map(r =>
+        Ok(r)
+      )
+    }
   }
 
-  def deleteItem(id: Int) = Action.async { request =>
+  def deleteItem(id: Int) = Action.async {
     itemLogic.deleteItem(id).map(r =>
       Ok(r)
     )
   }
 
   def addStockByItemId(itemId: Int) = Action.async { request =>
-    stockLogic.addStock(itemId, request.body.asJson.get.as[Stock]).map(r =>
-      Ok(r)
-    )
+    request.body.asJson.fold(Future.successful(BadRequest(requestErrorMessage))) { payload =>
+      stockLogic.addStock(itemId, payload.as[Stock]).map(r =>
+        Ok(r)
+      )
+    }
   }
 }
+
+class BadIncomingRequest extends Exception

@@ -3,10 +3,12 @@ package services
 import com.google.inject.Inject
 import models.{Stock, StockRecord}
 import services.database.StockRepo
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class StockLogic@Inject()(repo: StockRepo) {
+class StockLogic @Inject()(repo: StockRepo) {
+
   import repo.dbConfig.driver.api._
 
   def addStock(itemId: Int, stock: Stock): Future[String] = {
@@ -16,8 +18,7 @@ class StockLogic@Inject()(repo: StockRepo) {
         stock.quantities.count,
         stock.quantities.state,
         stock.sku.value,
-        itemId,
-        stock.stockItems.state
+        itemId
       )
     ).map(_ => "Success!")
   }

@@ -7,6 +7,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class ItemLogic @Inject()(repo: ItemRepo) {
+
   import repo.dbConfig.driver.api._
 
   def getItems(detail: Option[Boolean], start: Option[String], size: Option[Int]): Future[List[Item]] = {
@@ -15,26 +16,27 @@ class ItemLogic @Inject()(repo: ItemRepo) {
         .filter(f =>
           size.map(s =>
             f.sizeValue === s).getOrElse(slick.lifted.LiteralColumn(true)))
-            .result
+        .result
     ).map(_.map(_.toItem).toList)
   }
 
-// For example when adding more optional filters:
-//
-//  def search(departureLocation: Option[String], arrivalLocation: Option[String]) = {
-//    val query = for {
-//      flight <- slickFlights.filter(f =>
-//        departureLocation.map(d =>
-//          f.departureLocation === d).getOrElse(slick.lifted.LiteralColumn(true)) &&
-//          arrivalLocation.map(a =>
-//            f.arrivalLocation === a).getOrElse(slick.lifted.LiteralColumn(true))
-//      )
-//    } yield flight
+  // For example when adding more optional filters:
+  //
+  //  def search(departureLocation: Option[String], arrivalLocation: Option[String]) = {
+  //    val query = for {
+  //      flight <- slickFlights.filter(f =>
+  //        departureLocation.map(d =>
+  //          f.departureLocation === d).getOrElse(slick.lifted.LiteralColumn(true)) &&
+  //          arrivalLocation.map(a =>
+  //            f.arrivalLocation === a).getOrElse(slick.lifted.LiteralColumn(true))
+  //      )
+  //    } yield flight
 
   def getItem(id: Int): Future[Item] = {
     repo.db.run(
       repo.items.filter(_.id === id).result
-    ).map{ _.headOption match {
+    ).map {
+      _.headOption match {
         case Some(result) => result.toItem
         case None => ??? //todo
       }

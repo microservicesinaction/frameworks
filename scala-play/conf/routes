@@ -2,7 +2,6 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-#todo What do you mean by start?
 GET     /items              controllers.Application.getItems(detail: Option[Boolean], start: Option[String], size: Option[Int])
 GET     /items/:id          controllers.Application.getItemById(id: Int)
 

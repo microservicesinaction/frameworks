@@ -1,4 +1,4 @@
-name := """playProject"""
+name := """scala-play"""
 
 version := "1.0-SNAPSHOT"
 
@@ -17,7 +17,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick" % "2.0.0",
   "com.typesafe.play" %% "play-slick-evolutions" % "2.0.0",
   "com.h2database" % "h2" % "1.4.187",
-  "org.scalatestplus.play"  %%  "scalatestplus-play"  % "1.5.1" % Test
+  "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 )
 
 resolvers += "Sonatype snapshots" at "http://oss.sonatype.org/content/repositories/snapshots/"

@@ -15,16 +15,12 @@ class StockDefinitionsSpec extends PlaySpec {
          |    "count": 12,
          |    "state": "Full"
          |   },
-         |  "sku": "102/305",
-         |  "stockItems": {
-         |    "itemId": 100,
-         |    "state": "Dunno"
-         |  }
+         |  "sku": "102/305"
          |}
          |
          """.stripMargin)
 
-    val stock = Stock(Quantities(12, "Full"), Sku("102/305"), StockItems(100, "Dunno"))
+    val stock = Stock(Quantities(12, "Full"), Sku("102/305"))
 
 
     "write to Json" in {
