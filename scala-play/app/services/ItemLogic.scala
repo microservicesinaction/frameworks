@@ -2,11 +2,12 @@ package services.database
 
 import com.google.inject.Inject
 import models._
+import services.StockLogic
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class ItemLogic @Inject()(repo: ItemRepo) {
+class ItemLogic @Inject()(repo: ItemRepo, stockLogic: StockLogic) {
 
   import repo.dbConfig.driver.api._
 
@@ -76,6 +77,7 @@ class ItemLogic @Inject()(repo: ItemRepo) {
   }
 
   def deleteItem(id: Int): Future[String] = {
+    stockLogic.deleteStock(id)
     repo.db.run(
       repo.items.filter(_.id === id).delete
     ).map(_ => "Success!")

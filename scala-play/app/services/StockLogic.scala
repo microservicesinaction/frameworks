@@ -22,4 +22,10 @@ class StockLogic @Inject()(repo: StockRepo) {
       )
     ).map(_ => "Success!")
   }
+
+  def deleteStock(itemId: Int): Future[String] = {
+    repo.db.run(
+      repo.stock.filter(_.itemId === itemId).delete
+    ).map(_ => "Success!")
+  }
 }
