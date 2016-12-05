@@ -11,7 +11,7 @@ import spray.http.HttpRequest
 
 class StockServiceSpec extends Specification with Specs2RouteTest with StockService {
   def actorRefFactory = system
-  
+
   "StockService" should {
 
     "GET requests should return a list of items" in {
@@ -24,7 +24,7 @@ class StockServiceSpec extends Specification with Specs2RouteTest with StockServ
       HttpRequest(
         PUT, s"/items",
         entity = HttpEntity(
-         "" //todo
+          "" //todo
         )
       ) ~> myRoute ~> check {
         response.status should be equalTo OK

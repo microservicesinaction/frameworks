@@ -2,18 +2,19 @@ package com.stockService
 
 import akka.actor.{ActorSystem, Props}
 import akka.io.IO
-import spray.can.Http
 import akka.pattern.ask
 import akka.util.Timeout
+import spray.can.Http
+
 import scala.concurrent.duration._
 
 object Boot extends App {
 
-  implicit val system = ActorSystem("on-spray-can")
+  implicit val system = ActorSystem("myActor")
 
-  val service = system.actorOf(Props[StockServiceActor], "demo-service")
+  val service = system.actorOf(Props[StockServiceActor], "myService")
 
   implicit val timeout = Timeout(5.seconds)
 
-  IO(Http) ? Http.Bind(service, interface = "localhost", port = 8080)
+  IO(Http) ? Http.Bind(service, interface = "localhost", port = 9000)
 }

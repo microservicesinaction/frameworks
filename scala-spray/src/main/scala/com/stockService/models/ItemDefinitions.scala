@@ -1,4 +1,4 @@
-package com.stockService
+package com.stockService.models
 
 import spray.json.DefaultJsonProtocol
 
@@ -17,6 +17,7 @@ case class State(value: String)
 case class Sku(value: String)
 
 case class Item(id: Int, price: Price, colour: Colour, tags: AttributeTag, size: Size, state: State, sku: Sku)
+
 object ItemJsonProtocol extends DefaultJsonProtocol {
   implicit val PriceFormat = jsonFormat2(Price)
   implicit val ColourFormat = jsonFormat1(Colour)

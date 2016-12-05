@@ -1,15 +1,20 @@
 package com.stockService.db
 
-import com.stockService.ItemRecord
+import com.stockService.models.ItemRecord
 import slick.driver.H2Driver.api._
 import slick.lifted.Tag
 
-class ItemRepo { //todo object?
+class ItemRepo {
+  //todo object?
 
   val items = TableQuery[ItemTable]
   val db = Database.forConfig("h2mem1")
+  val setup = DBIO.seq(items.schema.create)
+  val setupFuture = db.run(setup)
 
   class ItemTable(tag: Tag) extends Table[ItemRecord](tag, "ITEMS") {
+
+    def * = (id, priceValue, priceCurrency, colour, tags, sizeValue, sizeRegion, state, sku) <> ((ItemRecord.apply _).tupled, ItemRecord.unapply)
 
     def id = column[Int]("ID", O.AutoInc, O.PrimaryKey)
 
@@ -28,10 +33,5 @@ class ItemRepo { //todo object?
     def state = column[String]("STATE")
 
     def sku = column[String]("SKU")
-
-    def * = (id, priceValue, priceCurrency, colour, tags, sizeValue, sizeRegion, state, sku) <> ((ItemRecord.apply _).tupled, ItemRecord.unapply)
   }
-
-  val setup = DBIO.seq(items.schema.create)
-  val setupFuture = db.run(setup)
 }

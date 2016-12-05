@@ -1,10 +1,10 @@
 package com.stockService.logic
 
-import com.stockService.{Stock, StockRecord}
-import com.stockService.db.{ItemRepo, StockRepo}
+import com.stockService.db.StockRepo
+import com.stockService.models.{Stock, StockRecord}
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class StockLogic {
 
@@ -19,9 +19,14 @@ class StockLogic {
         stock.quantities.count,
         stock.quantities.state,
         stock.sku.value,
-        itemId,
-        stock.stockItems.state
+        itemId
       )
+    ).map(_ => "Success!")
+  }
+
+  def deleteStock(itemId: Int): Future[String] = {
+    repo.db.run(
+      repo.stock.filter(_.itemId === itemId).delete
     ).map(_ => "Success!")
   }
 

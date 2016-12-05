@@ -74,5 +74,5 @@ registers new item (id doesn't mean anything)
 
 DELETE /items/{id}
 
-deletes item with requested id
+deletes item with and corresponding stock requested id
 
