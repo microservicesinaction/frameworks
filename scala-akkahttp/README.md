@@ -1,4 +1,4 @@
-This is your Play application
+This is your Akka-Http application
 =============================
 
 To run tests
@@ -56,6 +56,7 @@ adds a stock record to the database - just to test for now
 POST /items
 Example Request Payload:
 {
+  "id": 1,
   "price": {
     "value": 12,
     "currency": "GBP"
@@ -75,4 +76,3 @@ registers new item (id doesn't mean anything)
 DELETE /items/{id}
 
 deletes item and corresponding stock with requested id
-
